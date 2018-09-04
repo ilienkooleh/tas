@@ -93,6 +93,7 @@ class Site extends Main
 		{
 			$model = new ScpfData();
 			$data  = $model->prepareApiData($post);
+            header("Content-type: application/json; charset=utf-8");
 			echo json_encode($data);
 		}
 		else

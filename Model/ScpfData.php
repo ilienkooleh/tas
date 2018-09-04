@@ -121,8 +121,6 @@ class ScpfData extends Model
 			$sql    = $sql . " AND s.SOURCE_OPEN  ='$source'";
 		}
 
-//		$model = new ScpfData();
-
 		$data['ACC'] = self::getApiData($sql);
 
 		return $data;
