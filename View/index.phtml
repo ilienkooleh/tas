@@ -1,0 +1,140 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TAS graphs</title>
+    <link href="/template/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/template/css/style_but.css" rel="stylesheet">
+    <script type="text/javascript" src="/template/js/jquery-3.2.1.min.js"></script>
+    <script src="/template/js/bootstrap.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.src.js"></script>
+</head>
+<body>
+<div style="margin: 0 auto; width: 100%; margin-left: 10%">
+    <div id="containerForJur" style="float:left; width: 700px; height: 700px; margin: 0 auto"></div>
+    <div id="containerForFop" style="float:left; width: 700px; height: 700px; margin: 0 auto; margin-left: 20px;"></div>
+</div>
+
+<script type="text/javascript">
+    $('document').ready(function () {
+        $.ajax({
+            url: 'index.php?page=getData',
+            dataType: "json",
+            success: function (data) {
+                console.log(data);
+                $(function () {
+                    $('#containerForJur').highcharts({
+                        chart: {
+                            type: 'column'
+                        },
+                        title: {
+                            text: 'Открытие/закрытие клиентов Юр. лиц по дням'
+                        },
+                        xAxis: {
+                            categories: data['jur']['dates']
+                        },
+                        yAxis: {
+                            labels: {
+                                align: 'left',
+                                x: -3
+                            },
+                            title: {
+                                text: 'К-во клиентов'
+                            },
+                            height: '95%',
+                            lineWidth: 1,
+                            resize: {
+                                enabled: true
+                            }
+                        },
+                        credits: {
+                            enabled: false
+                        },
+                        plotOptions: {
+                            series: {
+                                stacking: 'normal'
+                            }
+                        },
+                        series:
+                            [
+                                {
+                                    name: 'Открыли (отделение)',
+                                    data: data['jur']['openBranch'],
+                                    color: "rgb(67,67,72)",
+                                },
+                                {
+                                    name: 'Открыли (сайт)',
+                                    data: data['jur']['openSite'],
+                                    color: "rgb(169,255,150)",
+                                },
+                                {
+                                    name: 'Закрыли счет',
+                                    data: data['jur']['close'],
+                                    color: "rgb(149,206,255)",
+                                }
+                            ]
+                    });
+                });
+
+
+                $(function () {
+                    $('#containerForFop').highcharts({
+                        chart: {
+                            type: 'column'
+                        },
+                        title: {
+                            text: 'Открытие/закрытие клиентов Предпринемателей по дням'
+                        },
+                        xAxis: {
+                            categories: data['flp']['dates']
+                        },
+                        yAxis: {
+                            labels: {
+                                align: 'left',
+                                x: -3
+                            },
+                            title: {
+                                text: 'К-во клиентов'
+                            },
+                            height: '95%',
+                            lineWidth: 1,
+                            resize: {
+                                enabled: true
+                            }
+                        },
+                        credits: {
+                            enabled: false
+                        },
+                        plotOptions: {
+                            series: {
+                                stacking: 'normal'
+                            }
+                        },
+                        series:
+                            [
+                                {
+                                    name: 'Открыли(отделение)',
+                                    data: data['flp']['openBranch'],
+                                    color: "rgb(67,67,72)",
+                                },
+                                {
+                                    name: 'Открыли(сайт)',
+                                    data: data['flp']['openSite'],
+                                    color: "rgb(169,255,150)",
+                                },
+                                {
+                                    name: 'Закрыли счет',
+                                    data: data['flp']['close'],
+                                    color: "rgb(149,206,255)",
+                                }
+                            ]
+                    });
+                });
+
+
+            }
+        });
+    });
+</script>
+</body>
+</html>
+
